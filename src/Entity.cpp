@@ -23,18 +23,18 @@ sf::Vector2f Entity::getPosition() const {
     return position;
 }
 
-void Entity::setDirection(float newDirection) {
+void Entity::setDirection(sf::Vector2f newDirection) {
     direction = newDirection;
 }
 
-float Entity::getDirection() const {
+sf::Vector2f Entity::getDirection() const {
     return direction;
 }
 
-void Entity::setRotationDirection(float newRotationDirection) {
-    rotationDirection = newRotationDirection;
+void Entity::setRotation(sf::Angle newRotation) {
+    rotation = newRotation;
 }
 
-float Entity::getRotationDirection() const {
-    return rotationDirection;
+sf::Angle Entity::getRotation() const {
+    return rotation;
 }

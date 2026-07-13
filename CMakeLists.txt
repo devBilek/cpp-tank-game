@@ -26,7 +26,11 @@ add_executable(main src/main.cpp
     include/InputManager.hpp
     src/InputManager.cpp
     include/PlayerController.hpp
-    src/PlayerController.cpp)
+    src/PlayerController.cpp
+    include/Bullet.hpp
+    src/Bullet.cpp
+    include/BulletManager.hpp
+    src/BulletManager.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
 

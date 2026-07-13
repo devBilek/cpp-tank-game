@@ -1,40 +1,46 @@
 #include "../include/PlayerController.hpp"
 #include "SFML/Window/Keyboard.hpp"
 #include <SFML/System/Angle.hpp>
+#include <SFML/System/Vector2.hpp>
 //#include <cmath>
 
-PlayerController::PlayerController(InputManager& inputManager, Tank* player)
-:inputManager(inputManager), player(player) {
+PlayerController::PlayerController(InputManager& inputManager, Tank* player, BulletManager& bulletManager)
+:inputManager(inputManager), player(player), bulletManager(bulletManager) {
 
 }
 
 void PlayerController::update() {
-    float newDirection = 0;
-    float newRotationDirection = 0;
-    float newTurretDirection = 0;
+    sf::Vector2f newRawInput(0.f, 0.f);
+    float newTurretRawInput = 0;
 
     if (inputManager.isKeyPressed(sf::Keyboard::Key::W)) {
-        newDirection = 1;
+        newRawInput.y = 1;
     }
     if (inputManager.isKeyPressed(sf::Keyboard::Key::A)) {
-        newRotationDirection = -1;
+        newRawInput.x = -1;
     }
     if (inputManager.isKeyPressed(sf::Keyboard::Key::S)) {
-        newDirection = -1;
+        newRawInput.y = -1;
     }
     if (inputManager.isKeyPressed(sf::Keyboard::Key::D)) {
-        newRotationDirection = 1;
+        newRawInput.x = 1;
     }
 
     if (inputManager.isKeyPressed(sf::Keyboard::Key::T)) {
-        newTurretDirection = -1;
+        newTurretRawInput = -1;
     }
     if (inputManager.isKeyPressed(sf::Keyboard::Key::Y)) {
-        newTurretDirection = 1;
+        newTurretRawInput = 1;
     }
 
-    player->setDirection(newDirection);
-    player->setRotationDirection(newRotationDirection);
-    player->setTurretRotationDirection(newTurretDirection);
+
+
+    if (inputManager.isKeyPressed(sf::Keyboard::Key::U)) {
+        sf::Vector2f newDir = sf::Vector2f(std::cos(player->getRotation().asRadians() + player->getTurretRotation().asRadians()), std::sin(player->getRotation().asRadians() + player->getTurretRotation().asRadians()));
+        bulletManager.fireBullet(player->getPosition(), newDir);
+    }
+
+    player->setRawInput(newRawInput);
+    player->setTurretRawInput(newTurretRawInput);
     
 }

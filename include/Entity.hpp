@@ -9,13 +9,11 @@
 class Entity: public sf::Drawable {
 protected:
     sf::Sprite sprite;
-    const float maxSpeed = 250;
+    float maxSpeed = 250;
 
     sf::Vector2f position;
-    float direction;
-
+    sf::Vector2f direction;
     sf::Angle rotation;
-    float rotationDirection;
 
 
 public:
@@ -27,11 +25,11 @@ public:
     void setPosition(sf::Vector2f newPosition);
     sf::Vector2f getPosition() const;
 
-    void setDirection(float newDirection);
-    float getDirection() const;
+    void setDirection(sf::Vector2f newDirection);
+    sf::Vector2f getDirection() const;
 
-    void setRotationDirection(float newRotationDirection);
-    float getRotationDirection() const;
+    void setRotation(sf::Angle newRotation);
+    sf::Angle getRotation() const;
 
     virtual ~Entity() = default;
 };
