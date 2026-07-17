@@ -11,9 +11,8 @@ class PlayerController final {
 private:
     InputManager& inputManager;
     Tank* player;
-    BulletManager& bulletManager;
 public:
-    PlayerController(InputManager& inputManager, Tank* player, BulletManager& bulletManager);
+    PlayerController(InputManager& inputManager, Tank* player);
 
     void update();
 };

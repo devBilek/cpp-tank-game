@@ -1,6 +1,7 @@
 #include "../include/Tank.hpp"
 #include "SFML/System/Angle.hpp"
 #include "SFML/System/Vector2.hpp"
+#include <SFML/System/Time.hpp>
 #include <cmath>
 #include <cmath>
 #include <iostream>
@@ -9,18 +10,20 @@ Tank::Tank(sf::Texture& bodyTexture, sf::Texture& turretTexture, sf::Vector2f st
 :Entity(bodyTexture, startPosition), turret(turretTexture) {
     sprite.setOrigin(sf::Vector2f(64.f, 64.f));
     turret.setOrigin(sf::Vector2f(64.f, 64.f));
+
 };
 
 void Tank::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     Entity::draw(target, states);
     target.draw(turret, states);
+    bulletManager.draw(target, states);
 }
 
 sf::Vector2f Tank::computeDirection() {
     return sf::Vector2f(std::cos(rotation.asRadians()), std::sin(rotation.asRadians()));
 }
 sf::Vector2f Tank::computeTurretDirection() {
-    return sf::Vector2f(std::cos(turretRotation.asRadians()), std::sin(turretRotation.asRadians()));
+    return sf::Vector2f(std::cos(rotation.asRadians() + turretRotation.asRadians()), std::sin(rotation.asRadians() + turretRotation.asRadians()));
 }
 
 void Tank::update(float deltaTime) {
@@ -40,13 +43,16 @@ void Tank::update(float deltaTime) {
     if (turretRawInput != 0) {
         setTurretRotation(turretRotation + sf::degrees(turretRawInput * deltaTime * 90));
 
-        setTurretDirection(computeTurretDirection());
     }
+    setTurretDirection(computeTurretDirection());
 
     //update
     Entity::update(deltaTime);
+    bulletManager.update(deltaTime);
     turret.setPosition(position);
     turret.setRotation(rotation + turretRotation);
+
+    std::cout << "x: " << turretDirection.x << " y: " << turretDirection.y << "\n";
 }
 
 void Tank::setTurretRawInput(float newTurretRawInput) {
@@ -75,4 +81,14 @@ void Tank::setTurretDirection(sf::Vector2f newTurretDirection) {
 }
 sf::Vector2f Tank::getTurretDirection() const {
     return turretDirection;
+}
+
+void Tank::fireBullet() {
+    sf::Time time = shootCooldownClock.getElapsedTime();
+    if (time.asMilliseconds() >= 500) {
+        bulletManager.fireBullet(position, turretDirection);
+        shootCooldownClock.reset();
+        shootCooldownClock.start();
+    }
+    
 }

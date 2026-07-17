@@ -4,8 +4,8 @@
 #include <SFML/System/Vector2.hpp>
 //#include <cmath>
 
-PlayerController::PlayerController(InputManager& inputManager, Tank* player, BulletManager& bulletManager)
-:inputManager(inputManager), player(player), bulletManager(bulletManager) {
+PlayerController::PlayerController(InputManager& inputManager, Tank* player)
+:inputManager(inputManager), player(player) {
 
 }
 
@@ -36,8 +36,9 @@ void PlayerController::update() {
 
 
     if (inputManager.isKeyPressed(sf::Keyboard::Key::U)) {
-        sf::Vector2f newDir = sf::Vector2f(std::cos(player->getRotation().asRadians() + player->getTurretRotation().asRadians()), std::sin(player->getRotation().asRadians() + player->getTurretRotation().asRadians()));
-        bulletManager.fireBullet(player->getPosition(), newDir);
+        //sf::Vector2f newDir = sf::Vector2f(std::cos(player->getRotation().asRadians() + player->getTurretRotation().asRadians()), std::sin(player->getRotation().asRadians() + player->getTurretRotation().asRadians()));
+        //player
+        player->fireBullet();
     }
 
     player->setRawInput(newRawInput);

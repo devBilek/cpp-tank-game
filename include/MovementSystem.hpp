@@ -9,8 +9,7 @@ class Entity;
 class MovementSystem final {
 private:
     std::vector<Entity*>& entities;
-    std::vector<std::unique_ptr<Bullet>>& bullets;
 public:
-    MovementSystem(std::vector<Entity*>& entities, std::vector<std::unique_ptr<Bullet>>& bullets);
+    MovementSystem(std::vector<Entity*>& entities);
     void update(const float& deltaTime);
 };

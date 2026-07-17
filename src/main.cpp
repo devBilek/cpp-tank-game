@@ -29,15 +29,13 @@ int main()
 	std::vector<Entity*> entities;
 	std::shared_ptr<Tank> ent = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(200, 200));
 	entities.push_back(ent.get());
-	std::shared_ptr<Bullet> bul = std::make_shared<Bullet>(textureManager.getTexture("bullet"), sf::Vector2f(200, 200), sf::Vector2f(1, 0));
-	entities.push_back(bul.get());
 
 	BulletManager bulletManager;
 
-	RenderSystem renderSystem(entities, bulletManager.getBullets(), window);
-	MovementSystem movementSystem(entities, bulletManager.getBullets());
+	RenderSystem renderSystem(entities, window);
+	MovementSystem movementSystem(entities);
 	InputManager inputManager;
-	PlayerController playerController(inputManager, ent.get(), bulletManager);
+	PlayerController playerController(inputManager, ent.get());
 	
 
 	while ( window.isOpen() )

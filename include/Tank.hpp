@@ -1,14 +1,19 @@
 #pragma once
 
+#include "BulletManager.hpp"
 #include "Entity.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Angle.hpp>
+#include <SFML/System/Clock.hpp>
 #include <SFML/System/Vector2.hpp>
 class Entity;
+class BulletManager;
 
 class Tank final: public Entity {
 private:
+    sf::Clock shootCooldownClock;
+    BulletManager bulletManager;
     sf::Vector2f rawInput;
 
     sf::Sprite turret;
@@ -35,4 +40,6 @@ public:
     
     void setTurretDirection(sf::Vector2f newTurretDirection);
     sf::Vector2f getTurretDirection() const;
+
+    void fireBullet();
 };
