@@ -4,6 +4,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <cmath>
 #include <memory>
 #include <vector>
 #include "../include/Entity.hpp"
@@ -15,6 +16,8 @@
 #include "../include/PlayerController.hpp"
 #include "../include/Bullet.hpp"
 #include "../include/BulletManager.hpp"
+#include "../include/Wall.hpp"
+#include "../include/PhysicsSystem.hpp"
 
 int main()
 {
@@ -25,10 +28,19 @@ int main()
 	textureManager.addTexture("body", "body.png");
 	textureManager.addTexture("turret", "turret.png");
 	textureManager.addTexture("bullet", "bullet.png");
+	textureManager.addTexture("wall", "wall.png");
+	textureManager.setTextureRepeated("wall", true);
 
 	std::vector<Entity*> entities;
 	std::shared_ptr<Tank> ent = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(200, 200));
+	std::shared_ptr<Wall> wall = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(400.f, 300.f));
 	entities.push_back(ent.get());
+	entities.push_back(wall.get());
+
+	std::vector<Tank*> players;
+	players.push_back(ent.get());
+	std::vector<Wall*> walls;
+	walls.push_back(wall.get());
 
 	BulletManager bulletManager;
 
@@ -36,6 +48,7 @@ int main()
 	MovementSystem movementSystem(entities);
 	InputManager inputManager;
 	PlayerController playerController(inputManager, ent.get());
+	PhysicsSystem physicsSystem;
 	
 
 	while ( window.isOpen() )
@@ -52,6 +65,8 @@ int main()
 		renderSystem.update();
 		movementSystem.update(deltaTime.asSeconds());
 		playerController.update();
+
+		physicsSystem.resolvePlayersWallsCollision(players, walls);
 
 		window.display();
 	}

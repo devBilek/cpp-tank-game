@@ -1,9 +1,11 @@
 #include "../include/Entity.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/Transform.hpp>
 #include <SFML/System/Angle.hpp>
 
 Entity::Entity(sf::Texture& texture, sf::Vector2f startPosition)
-: sprite(texture), position(startPosition) {
+: sprite(texture), position(startPosition), direction(0.f, 0.f), rotation(sf::degrees(0)) {
 
 }
 
@@ -16,6 +18,7 @@ void Entity::update(float deltaTime) {
 }
 
 void Entity::setPosition(sf::Vector2f newPosition) {
+    previousPosition = position;
     position = newPosition;
 }
 
@@ -37,4 +40,15 @@ void Entity::setRotation(sf::Angle newRotation) {
 
 sf::Angle Entity::getRotation() const {
     return rotation;
+}
+
+sf::FloatRect Entity::getLocalBounds() const {
+    return sprite.getLocalBounds();
+}
+sf::Transform Entity::getTransform() const {
+    return sprite.getTransform();
+}
+
+void Entity::undoPosition() {
+    position = previousPosition;
 }

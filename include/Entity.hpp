@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SFML/Graphics/Rect.hpp"
+#include "SFML/Graphics/Transform.hpp"
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -14,8 +16,7 @@ protected:
     sf::Vector2f position;
     sf::Vector2f direction;
     sf::Angle rotation;
-
-
+    sf::Vector2f previousPosition;
 public:
     Entity(sf::Texture& texture, sf::Vector2f startPosition);
 
@@ -30,6 +31,11 @@ public:
 
     void setRotation(sf::Angle newRotation);
     sf::Angle getRotation() const;
+
+    sf::FloatRect getLocalBounds() const;
+    sf::Transform getTransform() const;
+    
+    void undoPosition();
 
     virtual ~Entity() = default;
 };

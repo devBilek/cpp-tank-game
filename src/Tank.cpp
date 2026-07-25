@@ -4,10 +4,10 @@
 #include <SFML/System/Time.hpp>
 #include <cmath>
 #include <cmath>
-#include <iostream>
+//#include <iostream>
 
 Tank::Tank(sf::Texture& bodyTexture, sf::Texture& turretTexture, sf::Vector2f startPosition)
-:Entity(bodyTexture, startPosition), turret(turretTexture) {
+:Entity(bodyTexture, startPosition), turret(turretTexture), rawInput(0.f, 0.f), turretRotation(sf::degrees(0)), turretRawInput(0.f), turretDirection(1.f, 0.f) {
     sprite.setOrigin(sf::Vector2f(64.f, 64.f));
     turret.setOrigin(sf::Vector2f(64.f, 64.f));
 
@@ -52,7 +52,6 @@ void Tank::update(float deltaTime) {
     turret.setPosition(position);
     turret.setRotation(rotation + turretRotation);
 
-    std::cout << "x: " << turretDirection.x << " y: " << turretDirection.y << "\n";
 }
 
 void Tank::setTurretRawInput(float newTurretRawInput) {

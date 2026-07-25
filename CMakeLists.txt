@@ -30,7 +30,13 @@ add_executable(main src/main.cpp
     include/Bullet.hpp
     src/Bullet.cpp
     include/BulletManager.hpp
-    src/BulletManager.cpp)
+    src/BulletManager.cpp
+    include/CollisionManager.hpp
+    include/PhysicsSystem.hpp
+    include/Wall.hpp
+    src/Wall.cpp
+    src/PhysicsSystem.cpp
+    src/CollisionManager.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
 

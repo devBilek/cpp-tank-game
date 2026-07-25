@@ -32,3 +32,7 @@ sf::Texture& TextureManager::getTexture(std::string textureName) {
     
     return textures[textureName];
 }
+
+void TextureManager::setTextureRepeated(std::string textureName, bool repeated) {
+    textures[textureName].setRepeated(repeated);
+}

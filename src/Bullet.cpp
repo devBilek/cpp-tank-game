@@ -4,7 +4,7 @@
 Bullet::Bullet(sf::Texture& texture, sf::Vector2f startPosition, sf::Vector2f startDirection)
 : Entity(texture, startPosition) {
     direction = startDirection;
-    maxSpeed = 700;
+    maxSpeed = 3000;
     sprite.setOrigin(sf::Vector2f(8.f, 8.f));
 }
 

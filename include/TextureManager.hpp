@@ -19,4 +19,6 @@ public:
     void addTexture(std::string textureName, std::string filePath);
 
     sf::Texture& getTexture(std::string textureName);
+
+    void setTextureRepeated(std::string textureName, bool repeated);
 };
