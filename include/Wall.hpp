@@ -8,5 +8,5 @@ private:
     int width = 128;
     int height = 256;
 public:
-    Wall(sf::Texture& texture, sf::Vector2f startPosition);
+    Wall(sf::Texture& texture, sf::Vector2f startPosition, int width, int height);
 };

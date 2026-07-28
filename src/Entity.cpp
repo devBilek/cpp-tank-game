@@ -35,6 +35,7 @@ sf::Vector2f Entity::getDirection() const {
 }
 
 void Entity::setRotation(sf::Angle newRotation) {
+    previousRotation = rotation;
     rotation = newRotation;
 }
 
@@ -51,4 +52,7 @@ sf::Transform Entity::getTransform() const {
 
 void Entity::undoPosition() {
     position = previousPosition;
+}
+void Entity::undoRotation() {
+    rotation = previousRotation;
 }

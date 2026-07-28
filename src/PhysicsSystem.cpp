@@ -6,6 +6,7 @@ void PhysicsSystem::resolvePlayersWallsCollision(const std::vector<Tank*>& playe
         for (auto wall: walls) {
             if (CollisionManager::checkCollision(player, wall)) {
                 player->undoPosition();
+                player->undoRotation();
                 break;
             }
         }   

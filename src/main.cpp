@@ -33,16 +33,21 @@ int main()
 
 	std::vector<Entity*> entities;
 	std::shared_ptr<Tank> ent = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(200, 200));
-	std::shared_ptr<Wall> wall = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(400.f, 300.f));
+	std::shared_ptr<Wall> wall1 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(300.f, 120.f), 64, 256);
+	std::shared_ptr<Wall> wall2 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(900.f, 390.f), 64, 256);
+	std::shared_ptr<Wall> wall3 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(600.f, 200.f), 128, 64);
 	entities.push_back(ent.get());
-	entities.push_back(wall.get());
+	entities.push_back(wall1.get());
+	entities.push_back(wall2.get());
+	entities.push_back(wall3.get());
 
 	std::vector<Tank*> players;
 	players.push_back(ent.get());
 	std::vector<Wall*> walls;
-	walls.push_back(wall.get());
+	walls.push_back(wall1.get());
+	walls.push_back(wall2.get());
+	walls.push_back(wall3.get());
 
-	BulletManager bulletManager;
 
 	RenderSystem renderSystem(entities, window);
 	MovementSystem movementSystem(entities);

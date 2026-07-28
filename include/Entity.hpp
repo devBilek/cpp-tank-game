@@ -17,6 +17,7 @@ protected:
     sf::Vector2f direction;
     sf::Angle rotation;
     sf::Vector2f previousPosition;
+    sf::Angle previousRotation;
 public:
     Entity(sf::Texture& texture, sf::Vector2f startPosition);
 
@@ -36,6 +37,7 @@ public:
     sf::Transform getTransform() const;
     
     void undoPosition();
+    void undoRotation();
 
     virtual ~Entity() = default;
 };
