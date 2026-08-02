@@ -36,7 +36,9 @@ add_executable(main src/main.cpp
     include/Wall.hpp
     src/Wall.cpp
     src/PhysicsSystem.cpp
-    src/CollisionManager.cpp)
+    src/CollisionManager.cpp
+    include/ControlBindings.hpp
+    )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
 

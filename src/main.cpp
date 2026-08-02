@@ -4,7 +4,7 @@
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <cmath>
+#include <SFML/Window/Keyboard.hpp>
 #include <memory>
 #include <vector>
 #include "../include/Entity.hpp"
@@ -18,6 +18,7 @@
 #include "../include/BulletManager.hpp"
 #include "../include/Wall.hpp"
 #include "../include/PhysicsSystem.hpp"
+#include "../include/ControlBindings.hpp"
 
 int main()
 {
@@ -33,26 +34,47 @@ int main()
 
 	std::vector<Entity*> entities;
 	std::shared_ptr<Tank> ent = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(200, 200));
+	std::shared_ptr<Tank> ent1 = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(1100, 500), sf::degrees(180));
 	std::shared_ptr<Wall> wall1 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(300.f, 120.f), 64, 256);
 	std::shared_ptr<Wall> wall2 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(900.f, 390.f), 64, 256);
 	std::shared_ptr<Wall> wall3 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(600.f, 200.f), 128, 64);
 	entities.push_back(ent.get());
+	entities.push_back(ent1.get());
 	entities.push_back(wall1.get());
 	entities.push_back(wall2.get());
 	entities.push_back(wall3.get());
 
 	std::vector<Tank*> players;
 	players.push_back(ent.get());
+	players.push_back(ent1.get());
 	std::vector<Wall*> walls;
 	walls.push_back(wall1.get());
 	walls.push_back(wall2.get());
 	walls.push_back(wall3.get());
 
-
+	ControlBindings Player1ControlBindings {
+		sf::Keyboard::Key::W,
+		sf::Keyboard::Key::A,
+		sf::Keyboard::Key::S,
+		sf::Keyboard::Key::D,
+		sf::Keyboard::Key::T,
+		sf::Keyboard::Key::Y,
+		sf::Keyboard::Key::U
+	};
+	ControlBindings Player2ControlBindings {
+		sf::Keyboard::Key::Up,
+		sf::Keyboard::Key::Left,
+		sf::Keyboard::Key::Down,
+		sf::Keyboard::Key::Right,
+		sf::Keyboard::Key::Numpad1,
+		sf::Keyboard::Key::Numpad2,
+		sf::Keyboard::Key::Numpad3
+	};
 	RenderSystem renderSystem(entities, window);
 	MovementSystem movementSystem(entities);
 	InputManager inputManager;
-	PlayerController playerController(inputManager, ent.get());
+	PlayerController player1Controller(inputManager, ent.get(), Player1ControlBindings);
+	PlayerController player2Controller(inputManager, ent1.get(), Player2ControlBindings);
 	PhysicsSystem physicsSystem;
 	
 
@@ -69,7 +91,8 @@ int main()
 
 		renderSystem.update();
 		movementSystem.update(deltaTime.asSeconds());
-		playerController.update();
+		player1Controller.update();
+		player2Controller.update();
 
 		physicsSystem.resolvePlayersWallsCollision(players, walls);
 

@@ -8,6 +8,10 @@ Entity::Entity(sf::Texture& texture, sf::Vector2f startPosition)
 : sprite(texture), position(startPosition), direction(0.f, 0.f), rotation(sf::degrees(0)) {
 
 }
+Entity::Entity(sf::Texture& texture, sf::Vector2f startPosition, sf::Angle startRotation)
+: sprite(texture), position(startPosition), direction(0.f, 0.f), rotation(startRotation) {
+
+}
 
 void Entity::draw(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(sprite, states);

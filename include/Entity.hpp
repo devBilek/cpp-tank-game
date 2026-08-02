@@ -20,6 +20,7 @@ protected:
     sf::Angle previousRotation;
 public:
     Entity(sf::Texture& texture, sf::Vector2f startPosition);
+    Entity(sf::Texture& texture, sf::Vector2f startPosition, sf::Angle startRotation);
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     virtual void update(float deltaTime);

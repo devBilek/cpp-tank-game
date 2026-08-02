@@ -2,15 +2,20 @@
 #include "SFML/System/Angle.hpp"
 #include "SFML/System/Vector2.hpp"
 #include <SFML/System/Time.hpp>
+#include <X11/extensions/randr.h>
 #include <cmath>
 #include <cmath>
 //#include <iostream>
 
+Tank::Tank(sf::Texture& bodyTexture, sf::Texture& turretTexture, sf::Vector2f startPosition, sf::Angle startRotation)
+:Entity(bodyTexture, startPosition, startRotation), turret(turretTexture), rawInput(0.f, 0.f), turretRotation(sf::degrees(0)), turretRawInput(0.f), turretDirection(1.f, 0.f) {
+    sprite.setOrigin(sf::Vector2f(64.f, 64.f));
+    turret.setOrigin(sf::Vector2f(96.f, 96.f));
+};
 Tank::Tank(sf::Texture& bodyTexture, sf::Texture& turretTexture, sf::Vector2f startPosition)
 :Entity(bodyTexture, startPosition), turret(turretTexture), rawInput(0.f, 0.f), turretRotation(sf::degrees(0)), turretRawInput(0.f), turretDirection(1.f, 0.f) {
     sprite.setOrigin(sf::Vector2f(64.f, 64.f));
-    turret.setOrigin(sf::Vector2f(64.f, 64.f));
-
+    turret.setOrigin(sf::Vector2f(96.f, 96.f));
 };
 
 void Tank::draw(sf::RenderTarget& target, sf::RenderStates states) const {
