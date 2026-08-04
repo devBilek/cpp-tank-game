@@ -10,6 +10,7 @@
 #include <SFML/System/Vector2.hpp>
 class Entity: public sf::Drawable {
 protected:
+    bool active = true;
     sf::Sprite sprite;
     float maxSpeed = 250;
 
@@ -39,6 +40,9 @@ public:
     
     void undoPosition();
     void undoRotation();
+
+    void setActive(bool newActive);
+    bool isActive() const;
 
     virtual ~Entity() = 0;
 };

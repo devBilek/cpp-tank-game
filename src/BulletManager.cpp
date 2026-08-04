@@ -1,8 +1,10 @@
 #include "../include/BulletManager.hpp"
+#include <algorithm>
+#include <iterator>
 #include <memory>
 
-void BulletManager::fireBullet(sf::Vector2f startPosition, sf::Vector2f direction) {
-    bullets.push_back(std::make_unique<Bullet>(TextureManager::getInstance().getTexture("bullet"), startPosition, direction));
+void BulletManager::fireBullet(sf::Vector2f startPosition, sf::Vector2f direction, int tankID) {
+    bullets.push_back(std::make_unique<Bullet>(TextureManager::getInstance().getTexture("bullet"), startPosition, direction, tankID));
 }
 
 const std::vector<std::unique_ptr<Bullet>>& BulletManager::getBullets() const {
@@ -18,4 +20,10 @@ void BulletManager::update(float deltaTime) {
     for (const auto& bullet: bullets) {
         bullet->update(deltaTime);
     }
+    bullets.erase(
+        std::remove_if(std::begin(bullets), std::end(bullets),[](const std::unique_ptr<Bullet>& bullet){
+           return !bullet->isActive(); 
+        }), std::end(bullets)
+    );
+
 }

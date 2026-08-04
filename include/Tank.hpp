@@ -12,8 +12,10 @@ class BulletManager;
 
 class Tank final: public Entity {
 private:
+    int tankID;
+
     sf::Clock shootCooldownClock;
-    BulletManager bulletManager;
+    BulletManager* bulletManager;
     sf::Vector2f rawInput;
 
     sf::Sprite turret;
@@ -24,8 +26,8 @@ private:
     sf::Vector2f computeDirection();
     sf::Vector2f computeTurretDirection();
 public:
-    Tank(sf::Texture& bodyTexture, sf::Texture& tankTexture, sf::Vector2f startPosition);
-    Tank(sf::Texture& bodyTexture, sf::Texture& tankTexture, sf::Vector2f startPosition, sf::Angle startRotation);
+    Tank(sf::Texture& bodyTexture, sf::Texture& tankTexture, sf::Vector2f startPosition, BulletManager* bulletManager, int tankID);
+    Tank(sf::Texture& bodyTexture, sf::Texture& tankTexture, sf::Vector2f startPosition, BulletManager* bulletManager, sf::Angle startRotation, int tankID);
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     virtual void update(float deltaTime) override;
@@ -43,4 +45,6 @@ public:
     sf::Vector2f getTurretDirection() const;
 
     void fireBullet();
+
+    int getID();
 };

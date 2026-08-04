@@ -25,7 +25,7 @@
 
 int main()
 {
-	sf::RenderWindow window( sf::VideoMode( { 1200, 720 } ), "SFML works!" );
+	sf::RenderWindow window( sf::VideoMode( { 1200, 720 } ), "TankGame by devBilek" );
 	sf::Clock clock;
 
 	TextureManager& textureManager = TextureManager::getInstance();
@@ -39,9 +39,10 @@ int main()
 	FontManager& fontManager = FontManager::getInstance();
 	fontManager.addFont("font1", "arial.ttf");
 
+	BulletManager bulletManager;
 	std::vector<Entity*> entities;
-	std::shared_ptr<Tank> ent = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(200, 200));
-	std::shared_ptr<Tank> ent1 = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(1100, 500), sf::degrees(180));
+	std::shared_ptr<Tank> ent = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(200, 200), &bulletManager,  1);
+	std::shared_ptr<Tank> ent1 = std::make_shared<Tank>(textureManager.getTexture("body"), textureManager.getTexture("turret"), sf::Vector2f(1100, 500), &bulletManager, sf::degrees(180), 2);
 	std::shared_ptr<Wall> wall1 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(300.f, 120.f), 64, 256);
 	std::shared_ptr<Wall> wall2 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(900.f, 390.f), 64, 256);
 	std::shared_ptr<Wall> wall3 = std::make_shared<Wall>(textureManager.getTexture("wall"), sf::Vector2f(600.f, 200.f), 128, 64);
@@ -60,7 +61,7 @@ int main()
 	walls.push_back(wall3.get());
 	int player1points = 0, player2points = 0;
 	std::vector<GUIcomponent*> guiComponents;
-	std::shared_ptr<ScoreDisplay> scoreDisplay = std::make_shared<ScoreDisplay>(textureManager.getTexture("scoreDisplay"), sf::Vector2f(600.f, 690.f), fontManager.getFont("font1"), player1points, player2points);
+	std::shared_ptr<ScoreDisplay> scoreDisplay = std::make_shared<ScoreDisplay>(textureManager.getTexture("scoreDisplay"), sf::Vector2f(600.f, 678.f), fontManager.getFont("font1"), player1points, player2points);
 	guiComponents.push_back(scoreDisplay.get());
 
 	ControlBindings Player1ControlBindings {
@@ -81,8 +82,8 @@ int main()
 		sf::Keyboard::Key::Numpad2,
 		sf::Keyboard::Key::Numpad3
 	};
-	RenderSystem renderSystem(entities, guiComponents, window);
-	MovementSystem movementSystem(entities);
+	RenderSystem renderSystem(entities, guiComponents, &bulletManager, window);
+	MovementSystem movementSystem(entities, &bulletManager);
 	InputManager inputManager;
 	PlayerController player1Controller(inputManager, ent.get(), Player1ControlBindings);
 	PlayerController player2Controller(inputManager, ent1.get(), Player2ControlBindings);
@@ -99,14 +100,16 @@ int main()
 		}
 
 		window.clear(sf::Color(70, 70, 70));
-
-		renderSystem.update();
 		movementSystem.update(deltaTime.asSeconds());
+		renderSystem.update();
+		
 		player1Controller.update();
 		player2Controller.update();
 		scoreDisplay->update();
 
 		physicsSystem.resolvePlayersWallsCollision(players, walls);
+		physicsSystem.resolvePlayerBulletsCollision(players, &bulletManager, player1points, player2points);
+		physicsSystem.resolveBulletsWallCollision(&bulletManager, walls);
 
 		window.display();
 	}

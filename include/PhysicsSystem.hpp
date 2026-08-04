@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BulletManager.hpp"
 #include "Tank.hpp"
 #include <vector>
 #include "./CollisionManager.hpp"
@@ -13,4 +14,6 @@ private:
 
 public:
     void resolvePlayersWallsCollision(const std::vector<Tank*>& players, const std::vector<Wall*>& walls);
+    void resolvePlayerBulletsCollision(const std::vector<Tank*>& players, BulletManager* bulletManager, int& player1points, int& player2points);
+    void resolveBulletsWallCollision(BulletManager* bulletManager, const std::vector<Wall*>& walls);
 };

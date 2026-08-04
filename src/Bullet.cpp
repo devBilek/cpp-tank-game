@@ -1,8 +1,8 @@
 #include "../include/Bullet.hpp"
 #include "SFML/System/Vector2.hpp"
 
-Bullet::Bullet(sf::Texture& texture, sf::Vector2f startPosition, sf::Vector2f startDirection)
-: Entity(texture, startPosition) {
+Bullet::Bullet(sf::Texture& texture, sf::Vector2f startPosition, sf::Vector2f startDirection, int tankID)
+: Entity(texture, startPosition), tankID(tankID) {
     direction = startDirection;
     maxSpeed = 3000;
     sprite.setOrigin(sf::Vector2f(8.f, 8.f));
@@ -16,4 +16,8 @@ void Bullet::update(float deltaTime) {
 
     setPosition(newPosition);
     Entity::update(deltaTime);
+}
+
+int Bullet::getOwnerID() const {
+    return tankID;
 }

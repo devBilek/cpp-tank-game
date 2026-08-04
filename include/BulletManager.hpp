@@ -9,15 +9,15 @@
 
 class TextureManager;
 class Bullet;
-class BulletManager final: sf::Drawable {
+class BulletManager final: public sf::Drawable {
 private:
     std::vector<std::unique_ptr<Bullet>> bullets;
     
 public:
     BulletManager() = default;
-    void fireBullet(sf::Vector2f startPosition, sf::Vector2f direction);
+    void fireBullet(sf::Vector2f startPosition, sf::Vector2f direction, int tankID);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     void update(float deltaTime);
-
+    
     const std::vector<std::unique_ptr<Bullet>>& getBullets() const;
 };

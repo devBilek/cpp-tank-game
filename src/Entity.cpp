@@ -62,3 +62,10 @@ void Entity::undoRotation() {
 }
 
 Entity::~Entity() = default;
+
+void Entity::setActive(bool newActive) {
+    active = newActive;
+}
+bool Entity::isActive() const {
+    return active;
+}
