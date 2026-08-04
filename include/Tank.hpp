@@ -24,8 +24,8 @@ private:
     sf::Vector2f computeDirection();
     sf::Vector2f computeTurretDirection();
 public:
-    Tank(sf::Texture& bodyTexture, sf::Texture& tankTexture, sf::Vector2f startPositi);
-    Tank(sf::Texture& bodyTexture, sf::Texture& tankTexture, sf::Vector2f startPositio, sf::Angle startRotation);
+    Tank(sf::Texture& bodyTexture, sf::Texture& tankTexture, sf::Vector2f startPosition);
+    Tank(sf::Texture& bodyTexture, sf::Texture& tankTexture, sf::Vector2f startPosition, sf::Angle startRotation);
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     virtual void update(float deltaTime) override;

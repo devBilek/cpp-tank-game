@@ -1,5 +1,4 @@
 #include "../include/PhysicsSystem.hpp"
-#include <iostream>
 
 void PhysicsSystem::resolvePlayersWallsCollision(const std::vector<Tank*>& players, const std::vector<Wall*>& walls) {
     for (auto player: players) {

@@ -60,3 +60,5 @@ void Entity::undoPosition() {
 void Entity::undoRotation() {
     rotation = previousRotation;
 }
+
+Entity::~Entity() = default;

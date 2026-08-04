@@ -40,5 +40,5 @@ public:
     void undoPosition();
     void undoRotation();
 
-    virtual ~Entity() = default;
+    virtual ~Entity() = 0;
 };

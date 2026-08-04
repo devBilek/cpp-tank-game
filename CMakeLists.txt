@@ -38,6 +38,12 @@ add_executable(main src/main.cpp
     src/PhysicsSystem.cpp
     src/CollisionManager.cpp
     include/ControlBindings.hpp
+    include/GUIcomponent.hpp
+    src/GUIcomponent.cpp
+    include/ScoreDisplay.hpp
+    src/ScoreDisplay.cpp
+    include/FontManager.hpp
+    src/FontManager.cpp
     )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
